@@ -10,7 +10,7 @@ Prerequisites:
 
 Instructions:
 
-1. Run `git clone --recursive https://github.com/cemu-project/Cemu`
+1. Run `git clone --recursive https://github.com/deReeperJosh/Cemu`
 2. Launch `Cemu/generate_vs_solution.bat`.
     - If you installed VS to a custom location or use VS 2019, you may need to manually change the path inside the .bat file.
 3. Wait until it's done, then open `Cemu/build/Cemu.sln` in Visual Studio.
@@ -39,7 +39,7 @@ To compile Cemu, a recent enough compiler and STL with C++20 support is required
 `sudo dnf install clang cmake cubeb-devel freeglut-devel git glm-devel gtk3-devel kernel-headers libgcrypt-devel libsecret-devel nasm ninja-build perl-core systemd-devel zlib-devel`
 
 ### Build Cemu using cmake and clang
-1. `git clone --recursive https://github.com/cemu-project/Cemu`
+1. `git clone --recursive https://github.com/deReeperJosh/Cemu`
 2. `cd Cemu`
 3. `cmake -S . -B build -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -G Ninja`
 4. `cmake --build build`
@@ -89,7 +89,7 @@ You can skip this section if you have an Intel Mac. Every time you compile, you 
 `brew install boost git cmake llvm ninja nasm molten-vk automake libtool`
 
 ### Build Cemu using cmake and clang
-1. `git clone --recursive https://github.com/cemu-project/Cemu`
+1. `git clone --recursive https://github.com/deReeperJosh/Cemu`
 2. `cd Cemu`
 3. `cmake -S . -B build -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -G Ninja`
 4. `cmake --build build`
