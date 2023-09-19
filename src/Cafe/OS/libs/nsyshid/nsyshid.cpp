@@ -185,54 +185,6 @@ namespace nsyshid
 		backend::AttachDefaultBackends();
 	}
 
-	void AttachEmulatedDevices()
-	{
-		if (GetConfig().emulated_usb_devices.emulate_skylander_portal)
-		{
-			// Add Skylander Portal
-
-			HID_t* hidDevice = GetFreeHID();
-			hidDevice->handle = GenerateHIDHandle();
-			auto device = std::make_shared<SkylanderUSB>();
-			device->AssignHID(hidDevice);
-			deviceList.push_back(device);
-			// HIDDevice_t* hidDevice = getFreeDevice();
-			// if (hidDevice == nullptr)
-			// {
-			// 	cemuLog_logDebug(LogType::Force,
-			// 					 "HID: Maximum number of supported devices exceeded");
-			// 	return;
-			// }
-
-			// HIDDeviceInfo_t* deviceInfo =
-			// 	(HIDDeviceInfo_t*)malloc(sizeof(HIDDeviceInfo_t));
-			// memset(deviceInfo, 0, sizeof(HIDDeviceInfo_t));
-			// deviceInfo->devicePath = (wchar_t*)L"/cemu/skylanderportal";
-			// deviceInfo->vendorId = 0x1430;
-			// deviceInfo->productId = 0x0150;
-			// // generate handle
-			// deviceInfo->handle = generateHIDHandle();
-			// deviceInfo->emulated = true;
-
-			// // setup HIDDevice struct
-			// deviceInfo->hidDevice = hidDevice;
-			// memset(hidDevice, 0, sizeof(HIDDevice_t));
-			// hidDevice->handle = deviceInfo->handle;
-			// hidDevice->vendorId = deviceInfo->vendorId;
-			// hidDevice->productId = deviceInfo->productId;
-			// hidDevice->maxPacketSizeRX = 0x40;
-			// hidDevice->maxPacketSizeTX = 0x40;
-
-			// hidDevice->ukn04 = 0x11223344;
-
-			// hidDevice->ifIndex = 1;
-			// hidDevice->protocol = 0;
-			// hidDevice->subClass = 2;
-
-			// attachDeviceToList(deviceInfo);
-		}
-	}
-
 	bool AttachDevice(const std::shared_ptr<Device>& device)
 	{
 		std::lock_guard<std::recursive_mutex> lock(hidMutex);
@@ -304,6 +256,17 @@ namespace nsyshid
 		cemuLog_logDebug(LogType::Force, "nsyshid.DetachDevice(): device removed: {:04x}:{:04x}",
 						 device->m_vendorId,
 						 device->m_productId);
+	}
+
+	void AttachEmulatedDevices()
+	{
+		if (GetConfig().emulated_usb_devices.emulate_skylander_portal && !backendList.front()->m_foundSkylander)
+		{
+			cemuLog_logDebug(LogType::Force, "Attaching Emulated Portal");
+			// Add Skylander Portal
+			auto device = std::make_shared<SkylanderPortalDevice>();
+			AttachDevice(device);
+		}
 	}
 
 	void export_HIDAddClient(PPCInterpreter_t* hCPU)
@@ -890,5 +853,7 @@ namespace nsyshid
 		Whitelist::GetInstance();
 
 		AttachDefaultBackends();
+
+		AttachEmulatedDevices();
 	}
 } // namespace nsyshid

@@ -6,6 +6,7 @@
 #include "util/helpers/helpers.h"
 
 #include "Cafe/OS/libs/nsyshid/nsyshid.h"
+#include "Cafe/OS/libs/nsyshid/Skylander.h"
 
 #include <wx/button.h>
 #include <wx/checkbox.h>
@@ -610,9 +611,9 @@ void EmulatedUSBDeviceFrame::LoadSkylander(uint8 slot) {
   uint16 sky_id = uint16(file_data[0x11]) << 8 | uint16(file_data[0x10]);
   uint16 sky_var = uint16(file_data[0x1D]) << 8 | uint16(file_data[0x1C]);
 
-//   uint8 portal_slot = nsyshid::g_skyportal.load_skylander(file_data.data(),
-//                                                           std::move(sky_file));
-//   sky_slots[slot] = std::tuple(portal_slot, sky_id, sky_var);
+  uint8 portal_slot = nsyshid::g_skyportal.load_skylander(file_data.data(),
+                                                          std::move(sky_file));
+  sky_slots[slot] = std::tuple(portal_slot, sky_id, sky_var);
   UpdateSkylanderEdits();
 }
 void EmulatedUSBDeviceFrame::CreateSkylander(uint8 slot) {
@@ -621,7 +622,7 @@ void EmulatedUSBDeviceFrame::CreateSkylander(uint8 slot) {
 void EmulatedUSBDeviceFrame::ClearSkylander(uint8 slot) {
   if (auto slot_infos = sky_slots[slot]) {
     auto [cur_slot, id, var] = slot_infos.value();
-    // nsyshid::g_skyportal.remove_skylander(cur_slot);
+    nsyshid::g_skyportal.remove_skylander(cur_slot);
     sky_slots[slot] = {};
     UpdateSkylanderEdits();
   }

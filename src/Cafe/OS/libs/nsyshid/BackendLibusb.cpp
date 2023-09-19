@@ -243,8 +243,21 @@ namespace nsyshid::backend::libusb
 		}
 		if (desc.idVendor == 0x0e6f && desc.idProduct == 0x0241)
 		{
+			m_foundDimensions = true;
 			cemuLog_logDebug(LogType::Force,
-							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): lego dimensions portal detected");
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Lego Dimensions toypad detected");
+		}
+		if (desc.idVendor == 0x1430 && desc.idProduct == 0x0150)
+		{
+			m_foundSkylander = true;
+			cemuLog_logDebug(LogType::Force,
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Skylander portal detected");
+		}
+		if (desc.idVendor == 0x0e6f && desc.idProduct == 0x0129)
+		{
+			m_foundInfinity = true;
+			cemuLog_logDebug(LogType::Force,
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Infinity Base detected");
 		}
 		auto device = std::make_shared<DeviceLibusb>(m_ctx,
 													 desc.idVendor,

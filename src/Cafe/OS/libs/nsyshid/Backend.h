@@ -113,6 +113,11 @@ namespace nsyshid
 
 		virtual bool IsInitialisedOk() = 0;
 
+		// Found Devices
+		bool m_foundSkylander = false;
+		bool m_foundInfinity = false;
+		bool m_foundDimensions = false;
+
 	  protected:
 		// try to attach a device - only works if this backend is attached
 		bool AttachDevice(const std::shared_ptr<Device>& device);

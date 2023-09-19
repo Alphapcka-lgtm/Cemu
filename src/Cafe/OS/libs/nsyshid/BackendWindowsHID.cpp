@@ -102,6 +102,24 @@ namespace nsyshid::backend::windows
 		if (HidD_GetAttributes(hDevice, &hidAttr) == FALSE)
 			return nullptr;
 
+		if (hidAttr.VendorID == 0x0e6f && hidAttr.ProductID == 0x0241)
+		{
+			m_foundDimensions = true;
+			cemuLog_logDebug(LogType::Force,
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Lego Dimensions toypad detected");
+		}
+		if (hidAttr.VendorID == 0x1430 && hidAttr.ProductID == 0x0150)
+		{
+			m_foundSkylander = true;
+			cemuLog_logDebug(LogType::Force,
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Skylander portal detected");
+		}
+		if (hidAttr.VendorID == 0x0e6f && hidAttr.ProductID == 0x0129)
+		{
+			m_foundInfinity = true;
+			cemuLog_logDebug(LogType::Force,
+							 "nsyshid::BackendLibusb::CheckAndCreateDevice(): Infinity Base detected");
+		}
 		auto device = std::make_shared<DeviceWindowsHID>(hidAttr.VendorID,
 														 hidAttr.ProductID,
 														 1,
