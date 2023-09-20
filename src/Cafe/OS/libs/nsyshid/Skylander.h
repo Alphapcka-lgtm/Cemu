@@ -14,9 +14,9 @@ namespace nsyshid
 
 		bool IsOpened() override;
 
-		ReadResult Read(uint8* data, sint32 length, sint32& bytesRead) override;
+		ReadResult Read(ReadMessage* message) override;
 
-		WriteResult Write(uint8* data, sint32 length, sint32& bytesWritten) override;
+		WriteResult Write(WriteMessage* message) override;
 
 		bool GetDescriptor(uint8 descType,
 						   uint8 descIndex,
@@ -26,7 +26,7 @@ namespace nsyshid
 
 		bool SetProtocol(uint32 ifIndex, uint32 protocol) override;
 
-		bool SetReport(uint8* reportData, sint32 length, uint8* originalData, sint32 originalLength) override;
+		bool SetReport(ReportMessage* message) override;
 
 	  private:
 		bool m_IsOpened;

@@ -35,14 +35,16 @@ namespace nsyshid
 		return m_IsOpened;
 	}
 
-	Device::ReadResult SkylanderPortalDevice::Read(uint8* data, sint32 length, sint32& bytesRead)
+	Device::ReadResult SkylanderPortalDevice::Read(ReadMessage* message)
 	{
-		memcpy(data, g_skyportal.get_status().data(), length);
-		bytesRead = length;
+		memcpy(message->data, g_skyportal.get_status().data(), message->length);
+		message->isFake = true;
+		message->expectedTimeMillis = 10;
+		message->bytesRead = message->length;
 		return Device::ReadResult::Success;
 	}
 
-	Device::WriteResult SkylanderPortalDevice::Write(uint8* data, sint32 length, sint32& bytesWritten)
+	Device::WriteResult SkylanderPortalDevice::Write(WriteMessage* message)
 	{
 		return Device::WriteResult::Success;
 	}
@@ -117,9 +119,11 @@ namespace nsyshid
 		return true;
 	}
 
-	bool SkylanderPortalDevice::SetReport(uint8* reportData, sint32 length, uint8* originalData, sint32 originalLength)
+	bool SkylanderPortalDevice::SetReport(ReportMessage* message)
 	{
-		g_skyportal.control_transfer(originalData, originalLength);
+		g_skyportal.control_transfer(message->originalData, message->originalLength);
+		message->isFake = true;
+		message->expectedTimeMillis = 1;
 		return true;
 	}
 

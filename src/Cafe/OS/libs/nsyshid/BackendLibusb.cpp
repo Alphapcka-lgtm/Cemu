@@ -484,7 +484,7 @@ namespace nsyshid::backend::libusb
 		return m_libusbHandle != nullptr && m_handleInUseCounter >= 0;
 	}
 
-	Device::ReadResult DeviceLibusb::Read(uint8* data, sint32 length, sint32& bytesRead)
+	Device::ReadResult DeviceLibusb::Read(ReadMessage* message)
 	{
 		auto handleLock = AquireHandleLock();
 		if (!handleLock->IsValid())
@@ -501,8 +501,8 @@ namespace nsyshid::backend::libusb
 		{
 			ret = libusb_bulk_transfer(handleLock->GetHandle(),
 									   this->m_libusbEndpointIn,
-									   data,
-									   length,
+									   message->data,
+									   message->length,
 									   &actualLength,
 									   timeout);
 		}
@@ -513,8 +513,8 @@ namespace nsyshid::backend::libusb
 			// success
 			cemuLog_logDebug(LogType::Force, "nsyshid::DeviceLibusb::read(): read {} of {} bytes",
 							 actualLength,
-							 length);
-			bytesRead = actualLength;
+							 message->length);
+			message->bytesRead = actualLength;
 			return ReadResult::Success;
 		}
 		cemuLog_logDebug(LogType::Force,
@@ -523,7 +523,7 @@ namespace nsyshid::backend::libusb
 		return ReadResult::Error;
 	}
 
-	Device::WriteResult DeviceLibusb::Write(uint8* data, sint32 length, sint32& bytesWritten)
+	Device::WriteResult DeviceLibusb::Write(WriteMessage* message)
 	{
 		auto handleLock = AquireHandleLock();
 		if (!handleLock->IsValid())
@@ -533,23 +533,23 @@ namespace nsyshid::backend::libusb
 			return WriteResult::Error;
 		}
 
-		bytesWritten = 0;
+		message->bytesWritten = 0;
 		int actualLength = 0;
 		int ret = libusb_bulk_transfer(handleLock->GetHandle(),
 									   this->m_libusbEndpointOut,
-									   data,
-									   length,
+									   message->data,
+									   message->length,
 									   &actualLength,
 									   0);
 
 		if (ret == 0)
 		{
 			// success
-			bytesWritten = actualLength;
+			message->bytesWritten = actualLength;
 			cemuLog_logDebug(LogType::Force,
 							 "nsyshid::DeviceLibusb::write(): wrote {} of {} bytes",
-							 bytesWritten,
-							 length);
+							 message->bytesWritten,
+							 message->length);
 			return WriteResult::Success;
 		}
 		cemuLog_logDebug(LogType::Force,
@@ -726,8 +726,7 @@ namespace nsyshid::backend::libusb
 		return true;
 	}
 
-	bool DeviceLibusb::SetReport(uint8* reportData, sint32 length, uint8* originalData,
-								 sint32 originalLength)
+	bool DeviceLibusb::SetReport(ReportMessage* message)
 	{
 		auto handleLock = AquireHandleLock();
 		if (!handleLock->IsValid())
@@ -744,8 +743,8 @@ namespace nsyshid::backend::libusb
 										  bRequest,
 										  wValue,
 										  wIndex,
-										  reportData,
-										  length,
+										  message->reportData,
+										  message->length,
 										  timeout);
 #endif
 
