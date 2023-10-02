@@ -33,13 +33,9 @@ class SkylanderChooser: public wxFrame {
 	wxPanel* AddTrapTeamPage(wxNotebook* notebook);
 	wxPanel* AddSuperChargersPage(wxNotebook* notebook);
 	wxPanel* AddImaginatorsPage(wxNotebook* notebook);
-<<<<<<< Updated upstream
-	wxBoxSizer* CreateSkylanderElement(wxPanel* parent, Skylander* skylander);
-=======
 
 	wxBoxSizer* CreateSkylanderElement(wxPanel* parent, Skylander* skylander);
 	void AddSkylandersToElementSizer(wxBoxSizer* elementSizer, wxPanel* parent, std::list<Skylander*> skylanders);
->>>>>>> Stashed changes
 
 	void LoadSkylander(uint8 slot, std::string file);
 	void CreateSkylander(uint8 slot);
