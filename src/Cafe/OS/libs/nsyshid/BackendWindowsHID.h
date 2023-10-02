@@ -41,15 +41,15 @@ namespace nsyshid::backend::windows
 
 		bool IsOpened() override;
 
-		ReadResult Read(ReadMessage message) override;
+		ReadResult Read(ReadMessage* message) override;
 
-		WriteResult Write(WriteMessage message) override;
+		WriteResult Write(WriteMessage* message) override;
 
 		bool GetDescriptor(uint8 descType, uint8 descIndex, uint8 lang, uint8* output, uint32 outputMaxLength) override;
 
 		bool SetProtocol(uint32 ifIndef, uint32 protocol) override;
 
-		bool SetReport(ReportMessage message) override;
+		bool SetReport(ReportMessage* message) override;
 
 	  private:
 		wchar_t* m_devicePath;
