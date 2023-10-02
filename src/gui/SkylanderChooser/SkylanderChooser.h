@@ -7,6 +7,7 @@ class wxPanel;
 class wxNotebook;
 class wxBoxSizer;
 class wxTextCtrl;
+class wxScrolledWindow;
 
 class SkylanderChooser: public wxFrame {
 
@@ -30,7 +31,7 @@ class SkylanderChooser: public wxFrame {
 	wxPanel* AddSpyrosAdventurePage(wxNotebook* notebook);
 	wxPanel* AddGiantsPage(wxNotebook* notebook);
 	wxPanel* AddSwapForcePage(wxNotebook* notebook);
-	wxPanel* AddTrapTeamPage(wxNotebook* notebook);
+	wxScrolledWindow* AddTrapTeamPage(wxNotebook* notebook);
 	wxPanel* AddSuperChargersPage(wxNotebook* notebook);
 	wxPanel* AddImaginatorsPage(wxNotebook* notebook);
 

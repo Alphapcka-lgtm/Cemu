@@ -9,6 +9,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/statbmp.h>
+#include <wx/scrolwin.h>
 
 using std::string;
 using std::list;
@@ -19,9 +20,9 @@ using std::list;
 #include "resource/embedded/resources.h"
 
 const string skylanders_baseurl = "C:\\Users\\micha\\Documents\\Emulators\\Cemu POP\\skylanders";
-const int rescale_width = 75;
-const int rescale_height = 75;
-const int name_width = 100;
+const int rescale_width = 50;
+const int rescale_height = 50;
+const int name_width = 75;
 
 SkylanderChooser::SkylanderChooser(wxWindow* parent, std::array<wxTextCtrl*, 16> skylander_slots, std::array<std::optional<std::tuple<uint8, uint16, uint16>>, 16> sky_slots,const std::map<const std::pair<const uint16, const uint16>, const string>* list_skylanders)
 	: wxFrame(parent, wxID_ANY, _("Skylanders Chooser")) {
@@ -44,11 +45,14 @@ SkylanderChooser::SkylanderChooser(wxWindow* parent, std::array<wxTextCtrl*, 16>
 
 SkylanderChooser::~SkylanderChooser(){}
 
-wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
+wxScrolledWindow* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook)
+{
 	string trapteam_path = skylanders_baseurl + "\\Skylanders Trap Team";
 	string minis_path = trapteam_path + "\\Minis";
 
-	auto* trapTeamPanel = new wxPanel(notebook);
+	auto* trapTeamPanel = new wxScrolledWindow(notebook);
+	trapTeamPanel->FitInside();
+	trapTeamPanel->SetScrollRate(5, 5);
 	auto* trapTeamSizer = new wxGridBagSizer(0, 0);
 
 	// builds the sizer containing all the magic trap team skylanders
@@ -424,6 +428,131 @@ wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 		return airSizer;
 	};
 
+	auto tech = [trapTeamPanel, trapteam_path, minis_path, this]() {
+		string tech_path = trapteam_path + "\\Tech";
+		string tech_symbol = tech_path + "\\TechSymbolSkylanders.png";
+		auto* techSizer = new wxBoxSizer(wxHORIZONTAL);
+		auto* techIcon = new wxImage(tech_symbol);
+		techIcon->Rescale(rescale_width, rescale_height);
+		auto* techIconBm = new wxStaticBitmap(trapTeamPanel, wxID_ANY, wxBitmapBundle::FromImage(*techIcon));
+		techSizer->Add(techIconBm);
+		techSizer->AddSpacer(10);
+
+		list<Skylander*> techSkylander;
+		auto* jawbreaker = new Skylander();
+		jawbreaker->name = "Jawbreaker (Trap Master)";
+		jawbreaker->imgUrl = tech_symbol;
+		jawbreaker->fileUrl = tech_path + "\\Jawbreaker.sky";
+		techSkylander.push_back(jawbreaker);
+		auto* legJawbreaker = new Skylander();
+		legJawbreaker->name = "Legendary Jawbreaker (Trap Master)";
+		legJawbreaker->imgUrl = tech_symbol;
+		legJawbreaker->fileUrl = tech_path + "\\Alternate types\\Legendary Jawbreaker.sky";
+		techSkylander.push_back(legJawbreaker);
+
+		auto* gearshift = new Skylander();
+		gearshift->name = "Gearshift (Trap Master)";
+		gearshift->imgUrl = tech_symbol;
+		gearshift->fileUrl = tech_path + "\\Gearshift.sky";
+		techSkylander.push_back(gearshift);
+
+		auto* treadHead = new Skylander();
+		treadHead->name = "Tread Head";
+		treadHead->imgUrl = tech_symbol;
+		treadHead->fileUrl = tech_path + "\\Tread Head.sky";
+		techSkylander.push_back(treadHead);
+
+		auto* chopper = new Skylander();
+		chopper->name = "Chopper";
+		chopper->imgUrl = tech_symbol;
+		chopper->fileUrl = tech_path + "\\Chopper.sky";
+		techSkylander.push_back(chopper);
+
+		auto* eonsEliteTriggerHappy = new Skylander();
+		eonsEliteTriggerHappy->name = "Eon's Elite Trigger Happy";
+		eonsEliteTriggerHappy->imgUrl = tech_symbol;
+		eonsEliteTriggerHappy->fileUrl = tech_path + "\\Eon's Elite Trigger Happy.sky";
+		techSkylander.push_back(eonsEliteTriggerHappy);
+
+		auto* triggerSnappy = new Skylander();
+		triggerSnappy->name = "Trigger Snappy (Mini)";
+		triggerSnappy->imgUrl = tech_symbol;
+		triggerSnappy->fileUrl = minis_path + "\\Trigger Snappy.sky";
+		techSkylander.push_back(triggerSnappy);
+
+		auto* drobit = new Skylander();
+		drobit->name = "Drobit (Mini)";
+		drobit->imgUrl = tech_symbol;
+		drobit->fileUrl = minis_path + "\\Drobit.sky";
+		techSkylander.push_back(drobit);
+
+		AddSkylandersToElementSizer(techSizer, trapTeamPanel, techSkylander);
+		return techSizer;
+	};
+
+	auto earth = [trapTeamPanel, trapteam_path, minis_path, this]() {
+		string earth_path = trapteam_path + "\\Earth";
+		string earth_symbol = earth_path + "\\EarthSymbolSkylanders.png";
+		auto* earthSizer = new wxBoxSizer(wxHORIZONTAL);
+		auto* earthIcon = new wxImage(earth_symbol);
+		earthIcon->Rescale(rescale_width, rescale_height);
+		auto* earthIconBm = new wxStaticBitmap(trapTeamPanel, wxID_ANY, wxBitmapBundle::FromImage(*earthIcon));
+		earthSizer->Add(earthIconBm);
+		earthSizer->AddSpacer(10);
+
+		list<Skylander*> earthSkylander;
+
+		auto* wallop = new Skylander();
+		wallop->name = "Wallop (Trap Master)";
+		wallop->imgUrl = earth_symbol;
+		wallop->fileUrl = earth_path + "\\Wallop.sky";
+		earthSkylander.push_back(wallop);
+
+		auto* headRush = new Skylander();
+		headRush->name = "Head Rush (Trap Master)";
+		headRush->imgUrl = earth_symbol;
+		headRush->fileUrl = earth_path + "\\Head Rush.sky";
+		earthSkylander.push_back(headRush);
+		auto* nitroHeadRush = new Skylander();
+		nitroHeadRush->name = "Nitro Head Rush (Trap Master)";
+		nitroHeadRush->imgUrl = earth_symbol;
+		nitroHeadRush->fileUrl = earth_path + "\\Alternate types\\Nitro Head Rush.sky";
+		earthSkylander.push_back(nitroHeadRush);
+
+		auto* rockyRoll = new Skylander();
+		rockyRoll->name = "Rocky Roll";
+		rockyRoll->imgUrl = earth_symbol;
+		rockyRoll->fileUrl = earth_path + "\\Rocky Roll.sky";
+		earthSkylander.push_back(rockyRoll);
+
+		auto* fistBump = new Skylander();
+		fistBump->name = "Fist Bump";
+		fistBump->imgUrl = earth_symbol;
+		fistBump->fileUrl = earth_path + "\\Fist Bump.sky";
+		earthSkylander.push_back(fistBump);
+
+		auto* eonsEliteTerrafin = new Skylander();
+		eonsEliteTerrafin->name = "Eon's Elite Terrafin";
+		eonsEliteTerrafin->imgUrl = earth_symbol;
+		eonsEliteTerrafin->fileUrl = earth_path + "\\Eon's Elite Terrafin.sky";
+		earthSkylander.push_back(eonsEliteTerrafin);
+
+		auto* terrabite = new Skylander();
+		terrabite->name = "Terrabite (Mini)";
+		terrabite->imgUrl = earth_symbol;
+		terrabite->fileUrl = minis_path + "\\Terrabite.sky";
+		earthSkylander.push_back(terrabite);
+
+		auto* bop = new Skylander();
+		bop->name = "Bop (Mini)";
+		bop->imgUrl = earth_symbol;
+		bop->fileUrl = minis_path + "\\Bop.sky";
+		earthSkylander.push_back(bop);
+
+		AddSkylandersToElementSizer(earthSizer, trapTeamPanel, earthSkylander);
+		return earthSizer;
+	};
+
 	// builds the sizer containing all the undead trap team skylanders
 	auto undead = [trapTeamPanel, trapteam_path, minis_path, this]()-> wxBoxSizer* {
 		string undead_path = trapteam_path + "\\Undead";
@@ -488,12 +617,72 @@ wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 		return undeadSizer;
 	};
 
+	auto light = [trapTeamPanel, trapteam_path, minis_path, this]() {
+		string light_path = trapteam_path + "\\Light";
+		string light_symbol = light_path + "\\LightSymbolSkylanders.png";
+		auto* lightSizer = new wxBoxSizer(wxHORIZONTAL);
+		auto* lightIcon = new wxImage(light_symbol);
+		lightIcon->Rescale(rescale_width, rescale_height);
+		auto* fireIconBm = new wxStaticBitmap(trapTeamPanel, wxID_ANY, wxBitmapBundle::FromImage(*lightIcon));
+		lightSizer->Add(fireIconBm);
+		lightSizer->AddSpacer(10);
+
+		list<Skylander*> lightSkylander;
+
+		auto* knightLight = new Skylander();
+		knightLight->name = "Knight Light (Trap Master)";
+		knightLight->imgUrl = light_symbol;
+		knightLight->fileUrl = light_path + "\\Knight Light.sky";
+		lightSkylander.push_back(knightLight);
+
+		auto* spotlight = new Skylander();
+		spotlight->name = "Spotlight";
+		spotlight->imgUrl = light_symbol;
+		spotlight->fileUrl = light_path + "\\Spotlight.sky";
+		lightSkylander.push_back(spotlight);
+
+		AddSkylandersToElementSizer(lightSizer, trapTeamPanel, lightSkylander);
+		return lightSizer;
+	};
+
+	auto dark = [trapTeamPanel, trapteam_path, minis_path, this]() {
+		string dark_path = trapteam_path + "\\Dark";
+		string dark_symbol = dark_path + "\\DarkSymbolSkylanders.png";
+		auto* darkSizer = new wxBoxSizer(wxHORIZONTAL);
+		auto* darkIcon = new wxImage(dark_symbol);
+		darkIcon->Rescale(rescale_width, rescale_height);
+		auto* darkIconBm = new wxStaticBitmap(trapTeamPanel, wxID_ANY, wxBitmapBundle::FromImage(*darkIcon));
+		darkSizer->Add(darkIconBm);
+		darkSizer->AddSpacer(10);
+
+		list<Skylander*> darkSkylander;
+
+		auto* knightMare = new Skylander();
+		knightMare->name = "Knight Mare (Trap Master)";
+		knightMare->imgUrl = dark_symbol;
+		knightMare->fileUrl = dark_path + "\\Knight Mare.sky";
+		darkSkylander.push_back(knightMare);
+
+		auto* blackout = new Skylander();
+		blackout->name = "Blackout";
+		blackout->imgUrl = dark_symbol;
+		blackout->fileUrl = dark_path + "\\Blackout.sky";
+		darkSkylander.push_back(blackout);
+
+		AddSkylandersToElementSizer(darkSizer, trapTeamPanel, darkSkylander);
+		return darkSizer;
+	};
+
 	trapTeamSizer->Add(magic(), wxGBPosition(0, 0));
 	trapTeamSizer->Add(water(), wxGBPosition(1, 0));
 	trapTeamSizer->Add(fire(), wxGBPosition(2, 0));
 	trapTeamSizer->Add(life(), wxGBPosition(3, 0));
 	trapTeamSizer->Add(air(), wxGBPosition(4, 0));
+	trapTeamSizer->Add(tech(), wxGBPosition(5, 0));
+	trapTeamSizer->Add(earth(), wxGBPosition(6, 0));
 	trapTeamSizer->Add(undead(), wxGBPosition(7, 0));
+	trapTeamSizer->Add(light(), wxGBPosition(8, 0));
+	trapTeamSizer->Add(dark(), wxGBPosition(9, 0));
 
 	trapTeamSizer->SetFlexibleDirection(wxBOTH);
 	// trapTeamSizer->AddGrowableCol(0);
