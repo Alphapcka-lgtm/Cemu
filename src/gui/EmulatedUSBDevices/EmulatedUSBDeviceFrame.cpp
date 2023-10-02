@@ -18,9 +18,11 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 
+#include "gui/SkylanderChooser/SkylanderChooser.h"
+
 #include "resource/embedded/resources.h"
 
-const std::map<const std::pair<const uint16, const uint16>, const std::string>
+extern const std::map<const std::pair<const uint16, const uint16>, const std::string>
     list_skylanders = {
         {{0, 0x0000}, "Whirlwind"},
         {{0, 0x1801}, "Series 2 Whirlwind"},
@@ -510,6 +512,8 @@ EmulatedUSBDeviceFrame::EmulatedUSBDeviceFrame(wxWindow *parent)
               wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL) {
   SetIcon(wxICON(X_BOX));
 
+  m_parent = parent;
+
   auto &config = GetConfig();
 
   auto *sizer = new wxBoxSizer(wxVERTICAL);
@@ -551,6 +555,15 @@ wxPanel *EmulatedUSBDeviceFrame::AddSkylanderPage(wxNotebook* notebook) {
   for (int i = 0; i < 16; i++) {
     box_sizer->Add(AddSkylanderRow(i, box), 1, wxEXPAND, 5);
   }
+  auto *newRow = new wxFlexGridSizer(0, 2, 0, 2);
+  auto *button = new wxButton(box, wxID_ANY, _("new button"));
+  int* num = 0;
+  button->Bind(wxEVT_BUTTON, [parent=m_parent, skylander_slots=m_skylander_slots, skySlots=sky_slots](wxCommandEvent&) {
+	  auto* skylandersChooser = new SkylanderChooser(parent, skylander_slots, skySlots, &list_skylanders);
+	  skylandersChooser->Show();
+  });
+  newRow->Add(button, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+  box_sizer->Add(newRow, 1, wxEXPAND, 5);
   panel_sizer->Add(box_sizer, 0, wxEXPAND | wxALL, 5);
   panel->SetSizerAndFit(panel_sizer);
 

@@ -127,6 +127,8 @@ add_library(CemuGui
   wxcomponents/unchecked.xpm
   wxgui.h
   wxHelper.h
+  SkylanderChooser/SkylanderChooser.h
+  SkylanderChooser/SkylanderChooser.cpp
 )
 
 set_property(TARGET CemuGui PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")

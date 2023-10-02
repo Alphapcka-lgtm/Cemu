@@ -18,6 +18,7 @@ public:
   ~EmulatedUSBDeviceFrame();
 
 private:
+  wxWindow* m_parent;
   wxCheckBox* m_emulate_portal;
   std::array<wxTextCtrl*, 16> m_skylander_slots;
   std::array<std::optional<std::tuple<uint8, uint16, uint16>>, 16> sky_slots;
