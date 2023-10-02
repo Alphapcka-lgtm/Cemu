@@ -11,6 +11,10 @@
 #include <wx/statbmp.h>
 
 using std::string;
+<<<<<<< Updated upstream
+=======
+using std::list;
+>>>>>>> Stashed changes
 
 #include "Cafe/OS/libs/nsyshid/nsyshid.h"
 #include "Cafe/OS/libs/nsyshid/Skylander.h"
@@ -42,6 +46,10 @@ SkylanderChooser::~SkylanderChooser(){}
 
 wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 	string trapteam_path = skylanders_baseurl + "\\Skylanders Trap Team";
+<<<<<<< Updated upstream
+=======
+	string minis_path = trapteam_path + "\\Minis";
+>>>>>>> Stashed changes
 
 	auto* trapTeamPanel = new wxPanel(notebook);
 	auto* trapTeamSizer = new wxGridBagSizer(0, 0);
@@ -56,10 +64,15 @@ wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 	trapTeamWaterSizer->Add(water_element_icon);
 	trapTeamWaterSizer->AddSpacer(10);
 
+<<<<<<< Updated upstream
+=======
+	list<Skylander*> waterSkylanders;
+>>>>>>> Stashed changes
 	auto* snapShot = new Skylander();
 	snapShot->name = "Snap Shot (Trap Master)";
 	snapShot->imgUrl = "C:\\Users\\micha\\Downloads\\skylanders icons\\water\\Snap_Shot.png";
 	snapShot->fileUrl = water_path + "\\Snap Shot.sky";
+<<<<<<< Updated upstream
 	//trapTeamWaterSizer->Add(snapShotSizer);
 	trapTeamWaterSizer->Add(CreateSkylanderElement(trapTeamPanel, snapShot));
 	trapTeamWaterSizer->AddSpacer(10);
@@ -71,20 +84,74 @@ wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 	trapTeamWaterSizer->Add(CreateSkylanderElement(trapTeamPanel, lobStar));
 	trapTeamWaterSizer->AddSpacer(10);
 	// trapTeamSizer->Add(btn_LobStar, wxGBPosition(0, 1));
+=======
+	waterSkylanders.push_back(snapShot);
+	auto* darkSnapShot = new Skylander();
+	darkSnapShot->name = "Dark Snap Shot (Trap Master)";
+	darkSnapShot->imgUrl = "C:\\Users\\micha\\Downloads\\skylanders icons\\water\\Snap_Shot.png";
+	darkSnapShot->fileUrl = water_path + "\\Alternate types\\Dark Snap Shot.sky";
+	waterSkylanders.push_back(darkSnapShot);
+
+	auto* lobStar = new Skylander();
+	lobStar->name = "Lob-Star (Trap Master)";
+	lobStar->imgUrl = "C:\\Users\\micha\\Downloads\\skylanders icons\\water\\Lob_Star_Promo.png";
+	lobStar->fileUrl = trapteam_path + "\\Lob Star.sky";
+	waterSkylanders.push_back(lobStar);
+
+	auto* winterLobStar = new Skylander();
+	winterLobStar->name = "Winterfest Lob-Star (Trap Master)";
+	winterLobStar->imgUrl = "C:\\Users\\micha\\Downloads\\skylanders icons\\water\\Lob_Star_Promo.png";
+	winterLobStar->fileUrl = water_path + "\\Alternate types\\Winterfest Lob-Star.sky";
+	waterSkylanders.push_back(winterLobStar);
+>>>>>>> Stashed changes
 
 	auto* tidalWaveGillGrunt = new Skylander();
 	tidalWaveGillGrunt->name = "Tidel Wave Gill Grunt";
 	tidalWaveGillGrunt->imgUrl = water_symbol;
 	tidalWaveGillGrunt->fileUrl = water_path + "\\Tidal Wave Gill Grunt.sky";
+<<<<<<< Updated upstream
 	trapTeamWaterSizer->Add(CreateSkylanderElement(trapTeamPanel, tidalWaveGillGrunt));
 	trapTeamWaterSizer->AddSpacer(10);
+=======
+	waterSkylanders.push_back(tidalWaveGillGrunt);
+
+	auto* eonsEliteGillGrunt = new Skylander();
+	eonsEliteGillGrunt->name = "Eon's Elite Gill Grunt";
+	eonsEliteGillGrunt->imgUrl = water_symbol;
+	eonsEliteGillGrunt->fileUrl = water_path + "\\Eon's Elite Gill Grunt.sky";
+	waterSkylanders.push_back(eonsEliteGillGrunt);
+>>>>>>> Stashed changes
 
 	auto* echo = new Skylander();
 	echo->name = "Echo";
 	echo->imgUrl = water_symbol;
 	echo->fileUrl = water_path + "\\Echo.sky";
+<<<<<<< Updated upstream
 	trapTeamWaterSizer->Add(CreateSkylanderElement(trapTeamPanel, echo));
 	trapTeamWaterSizer->AddSpacer(10);
+=======
+	waterSkylanders.push_back(echo);
+
+	auto* flipWreck = new Skylander();
+	flipWreck->name = "Flip Wreck";
+	flipWreck->imgUrl = water_symbol;
+	flipWreck->fileUrl = water_path + "\\Flip Wreck.sky";
+	waterSkylanders.push_back(flipWreck);
+
+	auto* thumbling = new Skylander();
+	thumbling->name = "Thumbling (mini)";
+	thumbling->imgUrl = water_symbol;
+	thumbling->fileUrl = minis_path + "\\Thumpling.sky";
+	waterSkylanders.push_back(thumbling);
+
+	auto* gillRunt = new Skylander();
+	gillRunt->name = "Gill Runt";
+	gillRunt->imgUrl = water_symbol;
+	gillRunt->fileUrl = minis_path + "\\Gill Runt.sky";
+	waterSkylanders.push_back(gillRunt);
+
+	AddSkylandersToElementSizer(trapTeamWaterSizer, trapTeamPanel, waterSkylanders);
+>>>>>>> Stashed changes
 
 	// undead
 	auto* trapTeamUndeadSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -118,6 +185,17 @@ wxPanel* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook) {
 	return trapTeamPanel;
 }
 
+<<<<<<< Updated upstream
+=======
+void SkylanderChooser::AddSkylandersToElementSizer(wxBoxSizer* elementSizer, wxPanel* parent, std::list<Skylander*> skylanders) {
+	for (auto const& sky : skylanders)
+	{
+		elementSizer->Add(CreateSkylanderElement(parent, sky));
+		elementSizer->AddSpacer(10);
+	}
+}
+
+>>>>>>> Stashed changes
 wxBoxSizer* SkylanderChooser::CreateSkylanderElement(wxPanel* parent, Skylander* skylander) {
 	auto* sizer = new wxBoxSizer(wxVERTICAL);
 	auto* img = new wxImage(skylander->imgUrl);
