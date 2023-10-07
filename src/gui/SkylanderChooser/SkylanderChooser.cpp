@@ -49,6 +49,7 @@ wxScrolledWindow* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook)
 {
 	string trapteam_path = skylanders_baseurl + "\\Skylanders Trap Team";
 	string minis_path = trapteam_path + "\\Minis";
+	string trap_path = trapteam_path + "\\Traps";
 
 	auto* trapTeamPanel = new wxScrolledWindow(notebook);
 	trapTeamPanel->FitInside();
@@ -673,16 +674,459 @@ wxScrolledWindow* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook)
 		return darkSizer;
 	};
 
+	auto magicTrap = [trapTeamPanel, trap_path, this]() {
+		string magic_path = trap_path + "\\Magic";
+		string magic_symbol = magic_path + "\\MagicSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+		auto* arcaneHourglass = new Skylander();
+		arcaneHourglass->name = "Arcane Hourglass (Trap)";
+		arcaneHourglass->imgUrl = magic_symbol;
+		arcaneHourglass->fileUrl = magic_path + "\\Arcane Hourglass.sky";
+		traps.push_back(arcaneHourglass);
+
+		auto* axe = new Skylander();
+		axe->name = "Axe of Illusion (Trap)";
+		axe->imgUrl = magic_symbol;
+		axe->fileUrl = magic_path + "\\Axe of Illusion.sky";
+		traps.push_back(axe);
+
+		auto* bitersBane = new Skylander();
+		bitersBane->name = "Biter's Bane (Trap)";
+		bitersBane->imgUrl = magic_symbol;
+		bitersBane->fileUrl = magic_path + "\\Biter's Bane.sky";
+		traps.push_back(bitersBane);
+
+		auto* runeRocket = new Skylander();
+		runeRocket->name = "Rune Rocket (Trap)";
+		runeRocket->imgUrl = magic_symbol;
+		runeRocket->fileUrl = magic_path + "\\Rune Rocket.sky";
+		traps.push_back(runeRocket);
+
+		auto* skull = new Skylander();
+		skull->name = "Sorcerous Skull (Trap)";
+		skull->imgUrl = magic_symbol;
+		skull->fileUrl = magic_path + "\\Sorcerous Skull.sky";
+		traps.push_back(skull);
+
+		auto* slapper = new Skylander();
+		slapper->name = "Spell Slapper (Trap)";
+		slapper->imgUrl = magic_symbol;
+		slapper->fileUrl = magic_path + "\\Spell Slapper.sky";
+		traps.push_back(slapper);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto waterTrap = [trapTeamPanel, trap_path, this]() {
+		string water_path = trap_path + "\\Water";
+		string water_symbol = water_path + "\\WaterSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* aquaAxe = new Skylander();
+		aquaAxe->name = "Aqua Axe (Trap)";
+		aquaAxe->imgUrl = water_symbol;
+		aquaAxe->fileUrl = water_path + "\\Aqua Axe.sky";
+		traps.push_back(aquaAxe);
+
+		auto* floodFlask = new Skylander();
+		floodFlask->name = "Flood Flask (Trap)";
+		floodFlask->imgUrl = water_symbol;
+		floodFlask->fileUrl = water_path + "\\Flood Flask.sky";
+		traps.push_back(floodFlask);
+
+		auto* frostHelm = new Skylander();
+		frostHelm->name = "Frost Helm (Trap)";
+		frostHelm->imgUrl = water_symbol;
+		frostHelm->fileUrl = water_path + "\\Frost Helm.sky";
+		traps.push_back(frostHelm);
+
+		auto* soakingStaff = new Skylander();
+		soakingStaff->name = "Soaking Staff (Trap)";
+		soakingStaff->imgUrl = water_symbol;
+		soakingStaff->fileUrl = water_path + "\\Soaking Staff.sky";
+		traps.push_back(soakingStaff);
+
+		auto* tidalTiki = new Skylander();
+		tidalTiki->name = "Tidal Tiki (Trap)";
+		tidalTiki->imgUrl = water_symbol;
+		tidalTiki->fileUrl = water_path + "\\Tidal Tiki.sky";
+		traps.push_back(tidalTiki);
+		
+		auto* wetWalter = new Skylander();
+		wetWalter->name = "Wet Walter (Trap)";
+		wetWalter->imgUrl = water_symbol;
+		wetWalter->fileUrl = water_path + "\\Wet Walter.sky";
+		traps.push_back(wetWalter);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto fireTrap = [trapTeamPanel, trap_path, this]() {
+		string fire_path = trap_path + "\\Fire";
+		string fire_symbol = fire_path + "\\FireSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* blazingBlech = new Skylander();
+		blazingBlech->name = "Blazing Blech (Trap)";
+		blazingBlech->imgUrl = fire_symbol;
+		blazingBlech->fileUrl = fire_path + "\\Blazing Belch.sky";
+		traps.push_back(blazingBlech);
+
+		auto* eternalFlame = new Skylander();
+		eternalFlame->name = "Eternal Flame (Trap)";
+		eternalFlame->imgUrl = fire_symbol;
+		eternalFlame->fileUrl = fire_path + "\\Eternal Flame.sky";
+		traps.push_back(eternalFlame);
+		
+		auto* fireFlower = new Skylander();
+		fireFlower->name = "Fire Flower (Trap)";
+		fireFlower->imgUrl = fire_symbol;
+		fireFlower->fileUrl = fire_path + "\\Fire Flower.sky";
+		traps.push_back(fireFlower);
+
+		auto* stopper = new Skylander();
+		stopper->name = "Scorching Stopper (Trap)";
+		stopper->imgUrl = fire_symbol;
+		stopper->fileUrl = fire_path + "\\Scorching Stopper.sky";
+		traps.push_back(stopper);
+
+		auto* spinner = new Skylander();
+		spinner->name = "Searing Spinner (Trap)";
+		spinner->imgUrl = fire_symbol;
+		spinner->fileUrl = fire_path + "\\Searing Spinner.sky";
+		traps.push_back(spinner);
+
+		auto* sparkSpear = new Skylander();
+		sparkSpear->name = "Spark Spear (Trap)";
+		sparkSpear->imgUrl = fire_symbol;
+		sparkSpear->fileUrl = fire_path + "\\Spark Spear.sky";
+		traps.push_back(sparkSpear);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto lifeTrap = [trapTeamPanel, trap_path, this]() {
+		string life_path = trap_path + "\\Life";
+		string life_symbol = life_path + "\\LifeSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* emeraldEnergy = new Skylander();
+		emeraldEnergy->name = "Emerald Energy (Trap)";
+		emeraldEnergy->imgUrl = life_symbol;
+		emeraldEnergy->fileUrl = life_path + "\\Emerald Energy.sky";
+		traps.push_back(emeraldEnergy);
+
+		auto* jadeBlade = new Skylander();
+		jadeBlade->name = "Jade Blade (Trap)";
+		jadeBlade->imgUrl = life_symbol;
+		jadeBlade->fileUrl = life_path + "\\Jade Blade.sky";
+		traps.push_back(jadeBlade);
+
+		auto* oakEagle = new Skylander();
+		oakEagle->name = "Oak Eagle (Trap)";
+		oakEagle->imgUrl = life_symbol;
+		oakEagle->fileUrl = life_path + "\\Oak Eagle.sky";
+		traps.push_back(oakEagle);
+
+		auto* seedSerpent = new Skylander();
+		seedSerpent->name = "Seed Serpent (Trap)";
+		seedSerpent->imgUrl = life_symbol;
+		seedSerpent->fileUrl = life_path + "\\Seed Serpent.sky";
+		traps.push_back(seedSerpent);
+
+		auto* shrubShrieker = new Skylander();
+		shrubShrieker->name = "Shrub Shrieker (Trap)";
+		shrubShrieker->imgUrl = life_symbol;
+		shrubShrieker->fileUrl = life_path + "\\Shrub Shrieker.sky";
+		traps.push_back(shrubShrieker);
+
+		auto* weedWhacker = new Skylander();
+		weedWhacker->name = "Weed Whacker (Trap)";
+		weedWhacker->imgUrl = life_symbol;
+		weedWhacker->fileUrl = life_path + "\\Weed Whacker.sky";
+		traps.push_back(weedWhacker);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto airTrap = [trapTeamPanel, trap_path, this]() {
+		string air_path = trap_path + "\\Air";
+		string air_symbol = air_path + "\\AirSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* breezyBird = new Skylander();
+		breezyBird->name = "Breezy Bird (Trap)";
+		breezyBird->imgUrl = air_symbol;
+		breezyBird->fileUrl = air_path + "\\Breezy Bird.sky";
+		traps.push_back(breezyBird);
+
+		auto* cloudyCobra = new Skylander();
+		cloudyCobra->name = "Cloudy Cobra (Trap)";
+		cloudyCobra->imgUrl = air_symbol;
+		cloudyCobra->fileUrl = air_path + "\\Cloudy Cobra.sky";
+		traps.push_back(cloudyCobra);
+
+		auto* cycloneSaber = new Skylander();
+		cycloneSaber->name = "Cyclone Saber (Trap)";
+		cycloneSaber->imgUrl = air_symbol;
+		cycloneSaber->fileUrl = air_path + "\\Cyclone Saber.sky";
+		traps.push_back(cycloneSaber);
+
+		auto* draftyDecanter = new Skylander();
+		draftyDecanter->name = "Drafty Decanter (Trap)";
+		draftyDecanter->imgUrl = air_symbol;
+		draftyDecanter->fileUrl = air_path + "\\Drafty Decanter.sky";
+		traps.push_back(draftyDecanter);
+
+		auto* stormWarning = new Skylander();
+		stormWarning->name = "Storm Warning (Trap)";
+		stormWarning->imgUrl = air_symbol;
+		stormWarning->fileUrl = air_path + "\\Storm Warning.sky";
+		traps.push_back(stormWarning);
+
+		auto* tempestTimer = new Skylander();
+		tempestTimer->name = "Tempest Timer (Trap)";
+		tempestTimer->imgUrl = air_symbol;
+		tempestTimer->fileUrl = air_path + "\\Tempest Timer.sky";
+		traps.push_back(tempestTimer);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto techTrap = [trapTeamPanel, trap_path, this]() {
+		string tech_path = trap_path + "\\Tech";
+		string tech_symbol = tech_path + "\\TechSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* automaticAngel = new Skylander();
+		automaticAngel->name = "Automatic Angel (Trap)";
+		automaticAngel->imgUrl = tech_symbol;
+		automaticAngel->fileUrl = tech_path + "\\Automatic Angel.sky";
+		traps.push_back(automaticAngel);
+
+		auto* factoryFlower = new Skylander();
+		factoryFlower->name = "Factory Flower (Trap)";
+		factoryFlower->imgUrl = tech_symbol;
+		factoryFlower->fileUrl = tech_path + "\\Factory Flower.sky";
+		traps.push_back(factoryFlower);
+
+		auto* grabbingGadget = new Skylander();
+		grabbingGadget->name = "Grabbing Gadget (Trap)";
+		grabbingGadget->imgUrl = tech_symbol;
+		grabbingGadget->fileUrl = tech_path + "\\Grabbing Gadget.sky";
+		traps.push_back(grabbingGadget);
+
+		auto* makersMana = new Skylander();
+		makersMana->name = "Makers Mana (Trap)";
+		makersMana->imgUrl = tech_symbol;
+		makersMana->fileUrl = tech_path + "\\Makers Mana.sky";
+		traps.push_back(makersMana);
+
+		auto* techTotem = new Skylander();
+		techTotem->name = "Tech Totem (Trap)";
+		techTotem->imgUrl = tech_symbol;
+		techTotem->fileUrl = tech_path + "\\Tech Totem.sky";
+		traps.push_back(techTotem);
+
+		auto* topsyTechy = new Skylander();
+		topsyTechy->name = "Topsy Techy (Trap)";
+		topsyTechy->imgUrl = tech_symbol;
+		topsyTechy->fileUrl = tech_path + "\\Topsy Techy.sky";
+		traps.push_back(topsyTechy);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto earthTrap = [trapTeamPanel, trap_path, this]() {
+		string earth_path = trap_path + "\\Earth";
+		string earth_symbol = earth_path + "\\EarthSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* bandedBoulder = new Skylander();
+		bandedBoulder->name = "Banded Boulder (Trap)";
+		bandedBoulder->imgUrl = earth_symbol;
+		bandedBoulder->fileUrl = earth_path + "\\Banded Boulder.sky";
+		traps.push_back(bandedBoulder);
+
+		auto* time = new Skylander();
+		time->name = "Dust Of Time (Trap)";
+		time->imgUrl = earth_symbol;
+		time->fileUrl = earth_path + "\\Dust Of Time.sky";
+		traps.push_back(time);
+
+		auto* rockHawk = new Skylander();
+		rockHawk->name = "Rock Hawk (Trap)";
+		rockHawk->imgUrl = earth_symbol;
+		rockHawk->fileUrl = earth_path + "\\Rock Hawk.sky";
+		traps.push_back(rockHawk);
+
+		auto* rubbleTrouble = new Skylander();
+		rubbleTrouble->name = "Rubble Trouble (Trap)";
+		rubbleTrouble->imgUrl = earth_symbol;
+		rubbleTrouble->fileUrl = earth_path + "\\Rubble Trouble.sky";
+		traps.push_back(rubbleTrouble);
+
+		auto* slagHammer = new Skylander();
+		slagHammer->name = "Slag Hammer (Trap)";
+		slagHammer->imgUrl = earth_symbol;
+		slagHammer->fileUrl = earth_path + "\\Slag Hammer.sky";
+		traps.push_back(slagHammer);
+
+		auto* sandstorm = new Skylander();
+		sandstorm->name = "Spinning Sandstorm (Trap)";
+		sandstorm->imgUrl = earth_symbol;
+		sandstorm->fileUrl = earth_path + "\\Spinning Sandstorm.sky";
+		traps.push_back(sandstorm);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto undeadTrap = [trapTeamPanel, trap_path, this]() {
+		string undead_path = trap_path + "\\Undead";
+		string undead_symbol = undead_path + "\\UndeadSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* dreamPiercer = new Skylander();
+		dreamPiercer->name = "Dream Piercer (Trap)";
+		dreamPiercer->imgUrl = undead_symbol;
+		dreamPiercer->fileUrl = undead_path + "\\Dream Piercer.sky";
+		traps.push_back(dreamPiercer);
+
+		auto* grimGripper = new Skylander();
+		grimGripper->name = "Grim Gripper (Trap)";
+		grimGripper->imgUrl = undead_symbol;
+		grimGripper->fileUrl = undead_path + "\\Grim Gripper.sky";
+		traps.push_back(grimGripper);
+
+		auto* hauntedHatchet = new Skylander();
+		hauntedHatchet->name = "Haunted Hatchet (Trap)";
+		hauntedHatchet->imgUrl = undead_symbol;
+		hauntedHatchet->fileUrl = undead_path + "\\Haunted Hatchet.sky";
+		traps.push_back(hauntedHatchet);
+
+		auto* spectralSkull = new Skylander();
+		spectralSkull->name = "Spectral Skull (Trap)";
+		spectralSkull->imgUrl = undead_symbol;
+		spectralSkull->fileUrl = undead_path + "\\Spectral Skull.sky";
+		traps.push_back(spectralSkull);
+
+		auto* spiritSphere = new Skylander();
+		spiritSphere->name = "Spirit Sphere (Trap)";
+		spiritSphere->imgUrl = undead_symbol;
+		spiritSphere->fileUrl = undead_path + "\\Spirit Sphere.sky";
+		traps.push_back(spiritSphere);
+
+		auto* spookySnake = new Skylander();
+		spookySnake->name = "Spooky Snake (Trap)";
+		spookySnake->imgUrl = undead_symbol;
+		spookySnake->fileUrl = undead_path + "\\Spooky Snake.sky";
+		traps.push_back(spookySnake);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto lightTrap = [trapTeamPanel, trap_path, this]() {
+		string light_path = trap_path + "\\Light";
+		string light_symbol = light_path + "\\LightSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* beamScream = new Skylander();
+		beamScream->name = "Beam Scream (Trap)";
+		beamScream->imgUrl = light_symbol;
+		beamScream->fileUrl = light_path + "\\Beam Scream.sky";
+		traps.push_back(beamScream);
+
+		auto* heavenlyHawk = new Skylander();
+		heavenlyHawk->name = "Heavenly Hawk (Trap)";
+		heavenlyHawk->imgUrl = light_symbol;
+		heavenlyHawk->fileUrl = light_path + "\\Heavenly Hawk.sky";
+		traps.push_back(heavenlyHawk);
+
+		auto* shiningShip = new Skylander();
+		shiningShip->name = "Shining Ship (Trap)";
+		shiningShip->imgUrl = light_symbol;
+		shiningShip->fileUrl = light_path + "\\Shining Ship.sky";
+		traps.push_back(shiningShip);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
+	auto darkTrap = [trapTeamPanel, trap_path, this]() {
+		string dark_path = trap_path + "\\Dark";
+		string dark_symbol = dark_path + "\\DarkSymbolSkylanders.png";
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		list<Skylander*> traps;
+
+		auto* darkDagger = new Skylander();
+		darkDagger->name = "Dark Dagger (Trap)";
+		darkDagger->imgUrl = dark_symbol;
+		darkDagger->fileUrl = dark_path + "\\Dark Dagger.sky";
+		traps.push_back(darkDagger);
+
+		auto* ghastlyGrimace = new Skylander();
+		ghastlyGrimace->name = "Ghastly Grimace (Trap)";
+		ghastlyGrimace->imgUrl = dark_symbol;
+		ghastlyGrimace->fileUrl = dark_path + "\\Ghastly Grimace.sky";
+		traps.push_back(ghastlyGrimace);
+
+		auto* shadowSpider = new Skylander();
+		shadowSpider->name = "Shadow Spider (Trap)";
+		shadowSpider->imgUrl = dark_symbol;
+		shadowSpider->fileUrl = dark_path + "\\Shadow Spider.sky";
+		traps.push_back(shadowSpider);
+
+		AddSkylandersToElementSizer(sizer, trapTeamPanel, traps);
+		return sizer;
+	};
+
 	trapTeamSizer->Add(magic(), wxGBPosition(0, 0));
+	trapTeamSizer->Add(magicTrap(), wxGBPosition(0, 1));
 	trapTeamSizer->Add(water(), wxGBPosition(1, 0));
+	trapTeamSizer->Add(waterTrap(), wxGBPosition(1, 1));
 	trapTeamSizer->Add(fire(), wxGBPosition(2, 0));
+	trapTeamSizer->Add(fireTrap(), wxGBPosition(2, 1));
 	trapTeamSizer->Add(life(), wxGBPosition(3, 0));
+	trapTeamSizer->Add(lifeTrap(), wxGBPosition(3, 1));
 	trapTeamSizer->Add(air(), wxGBPosition(4, 0));
+	trapTeamSizer->Add(airTrap(), wxGBPosition(4, 1));
 	trapTeamSizer->Add(tech(), wxGBPosition(5, 0));
+	trapTeamSizer->Add(techTrap(), wxGBPosition(5, 1));
 	trapTeamSizer->Add(earth(), wxGBPosition(6, 0));
+	trapTeamSizer->Add(earthTrap(), wxGBPosition(6, 1));
 	trapTeamSizer->Add(undead(), wxGBPosition(7, 0));
+	trapTeamSizer->Add(undeadTrap(), wxGBPosition(7, 1));
 	trapTeamSizer->Add(light(), wxGBPosition(8, 0));
+	trapTeamSizer->Add(lightTrap(), wxGBPosition(8, 1));
 	trapTeamSizer->Add(dark(), wxGBPosition(9, 0));
+	trapTeamSizer->Add(darkTrap(), wxGBPosition(9, 1));
 
 	trapTeamSizer->SetFlexibleDirection(wxBOTH);
 	// trapTeamSizer->AddGrowableCol(0);
