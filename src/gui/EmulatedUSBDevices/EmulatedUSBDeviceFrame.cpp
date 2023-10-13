@@ -556,13 +556,13 @@ wxPanel *EmulatedUSBDeviceFrame::AddSkylanderPage(wxNotebook* notebook) {
     box_sizer->Add(AddSkylanderRow(i, box), 1, wxEXPAND, 5);
   }
   auto *newRow = new wxFlexGridSizer(0, 2, 0, 2);
-  auto *button = new wxButton(box, wxID_ANY, _("new button"));
+  auto *btn_skyChooser = new wxButton(box, wxID_ANY, _("Skylander Chooser"));
   int* num = 0;
-  button->Bind(wxEVT_BUTTON, [parent=m_parent, skylander_slots=m_skylander_slots, skySlots=sky_slots](wxCommandEvent&) {
+  btn_skyChooser->Bind(wxEVT_BUTTON, [parent=m_parent, skylander_slots=m_skylander_slots, skySlots=sky_slots](wxCommandEvent&) {
 	  auto* skylandersChooser = new SkylanderChooser(parent, skylander_slots, skySlots, &list_skylanders);
 	  skylandersChooser->Show();
   });
-  newRow->Add(button, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+  newRow->Add(btn_skyChooser, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
   box_sizer->Add(newRow, 1, wxEXPAND, 5);
   panel_sizer->Add(box_sizer, 0, wxEXPAND | wxALL, 5);
   panel->SetSizerAndFit(panel_sizer);

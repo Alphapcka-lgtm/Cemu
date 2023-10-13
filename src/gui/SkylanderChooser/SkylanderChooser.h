@@ -36,6 +36,7 @@ class SkylanderChooser: public wxFrame {
 	wxPanel* AddImaginatorsPage(wxNotebook* notebook);
 
 	wxBoxSizer* CreateSkylanderElement(wxPanel* parent, Skylander* skylander);
+	wxBoxSizer* CreateSwapForceSkylanderElement(wxPanel* parent, Skylander* top, Skylander* bottom);
 	void AddSkylandersToElementSizer(wxBoxSizer* elementSizer, wxPanel* parent, std::list<Skylander*> skylanders);
 
 	void LoadSkylander(uint8 slot, std::string file);

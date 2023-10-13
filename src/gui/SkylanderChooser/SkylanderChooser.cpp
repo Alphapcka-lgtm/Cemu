@@ -34,6 +34,7 @@ SkylanderChooser::SkylanderChooser(wxWindow* parent, std::array<wxTextCtrl*, 16>
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 	auto* notebook = new wxNotebook(this, wxID_ANY);
 
+	notebook->AddPage(AddSwapForcePage(notebook), "Swap Force");
 	notebook->AddPage(AddTrapTeamPage(notebook), "Trap Team");
 
 	sizer->Add(notebook, 1, wxEXPAND | wxALL, 5);
@@ -1140,6 +1141,124 @@ wxScrolledWindow* SkylanderChooser::AddTrapTeamPage(wxNotebook* notebook)
 	trapTeamPanel->SetSizerAndFit(trapTeamSizer);
 
 	return trapTeamPanel;
+}
+
+wxPanel* SkylanderChooser::AddSwapForcePage(wxNotebook* notebook) {
+	string swapforce_path = skylanders_baseurl + "\\Skylanders Swap Force";
+
+	auto* swapForcePanel = new wxPanel(notebook);
+	auto* swapForceSizer = new wxGridBagSizer(0, 0);
+
+	auto magic = [swapforce_path, swapForcePanel, this]() {
+		string path = swapforce_path + "\\Magic";
+		string symbol = path + "\\MagicSymbolSkylanders.png";
+
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		auto* icon = new wxImage(symbol);
+		icon->Rescale(rescale_width, rescale_height);
+		auto* iconBm = new wxStaticBitmap(swapForcePanel, wxID_ANY, wxBitmapBundle::FromImage(*icon));
+		sizer->Add(iconBm);
+		sizer->AddSpacer(10);
+
+		list<Skylander*> skylanders;
+
+		auto* lightCore = new Skylander();
+		lightCore->name = "LightCore Star Strike";
+		lightCore->imgUrl = symbol;
+		lightCore->fileUrl = path + "\\LightCore Star Strike.sky";
+		skylanders.push_back(lightCore);
+
+		auto* spyro = new Skylander();
+		spyro->name = "Mega Ram Spyro";
+		spyro->imgUrl = symbol;
+		spyro->fileUrl = path + "\\Mega Ram Spyro.sky";
+		skylanders.push_back(spyro);
+
+		auto* popFizz = new Skylander();
+		popFizz->name = "Super Gulp Pop Fizz";
+		popFizz->imgUrl = symbol;
+		popFizz->fileUrl = path + "\\Super Gulp Pop Fizz.sky";
+		skylanders.push_back(popFizz);
+
+		auto* dunebug = new Skylander();
+		dunebug->name = "Dune Bug";
+		dunebug->imgUrl = symbol;
+		dunebug->fileUrl = path + "\\Dune Bug.sky";
+		skylanders.push_back(dunebug);
+
+		auto* starStrike = new Skylander();
+		starStrike->name = "Star Strike";
+		starStrike->imgUrl = symbol;
+		starStrike->fileUrl = path + "\\Star Strike.sky";
+		skylanders.push_back(starStrike);
+
+		AddSkylandersToElementSizer(sizer, swapForcePanel, skylanders);
+
+		auto* trapShadow_top = new Skylander();
+		trapShadow_top->name = "Trap Shadow (Sneak)";
+		trapShadow_top->imgUrl = symbol;
+		trapShadow_top->fileUrl = path + "\\Trap Shadow (Top).sky";
+		auto* trapShadow_bot = new Skylander();
+		trapShadow_bot->name = "Trap Shadow (Sneak)";
+		trapShadow_bot->imgUrl = symbol;
+		trapShadow_bot->fileUrl = path + "\\Trap Shadow (Bottom).sky";
+		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, trapShadow_top, trapShadow_bot));
+
+		auto* hootLoop_top = new Skylander();
+		hootLoop_top->name = "Hoot Loop (Teleport)";
+		hootLoop_top->imgUrl = symbol;
+		hootLoop_top->fileUrl = path + "\\Hoot Loop (Top).sky";
+		auto* hootLoop_bot = new Skylander();
+		hootLoop_bot->name = "Hoot Loop (Teleport)";
+		hootLoop_bot->imgUrl = symbol;
+		hootLoop_bot->fileUrl = path + "\\Hoot Loop (Bottom).sky";
+
+		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, hootLoop_top, hootLoop_bot));
+		return sizer;
+	};
+
+	swapForceSizer->Add(magic(), wxGBPosition(0, 0));
+
+	swapForceSizer->SetFlexibleDirection(wxBOTH);
+
+	swapForcePanel->SetSizerAndFit(swapForceSizer);
+
+	return swapForcePanel;
+}
+
+wxBoxSizer* SkylanderChooser::CreateSwapForceSkylanderElement(wxPanel* parent, Skylander* top, Skylander* bottom)
+{
+	auto* sizer = new wxBoxSizer(wxVERTICAL);
+	auto* img_top = new wxImage(top->imgUrl);
+	double half_height = 0.5 * img_top->GetHeight();
+	img_top->Resize(wxSize(img_top->GetWidth(), half_height), wxPoint(0, 0));
+	img_top->Rescale(rescale_width, 0.5 * rescale_height);
+	wxBitmapBundle bitmap_top = wxBitmapBundle::FromImage(*img_top);
+	auto* btn_top = new wxButton(parent, wxID_ANY, "Top");
+	btn_top->SetBitmap(bitmap_top);
+	btn_top->Bind(wxEVT_BUTTON, [file = (top->fileUrl)](wxCommandEvent&) {
+		printf("top\n");
+		printf("%s\n", file.c_str());
+	});
+	sizer->Add(btn_top, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL));
+
+	auto* img_bot = new wxImage(bottom->imgUrl);
+	img_bot->Resize(wxSize(img_bot->GetWidth(), half_height), wxPoint(0, -half_height));
+	img_bot->Rescale(rescale_width, 0.5 * rescale_height);
+	wxBitmapBundle bitmap_bot = wxBitmapBundle::FromImage(*img_bot);
+	auto* btn_bot = new wxButton(parent, wxID_ANY, "Bot");
+	btn_bot->SetBitmap(bitmap_bot);
+	btn_bot->Bind(wxEVT_BUTTON, [file = (top->fileUrl)](wxCommandEvent&) {
+		printf("bot\n");
+		printf("%s\n", file.c_str());
+	});
+	sizer->Add(btn_bot, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL));
+	auto* text = new wxStaticText(parent, wxID_ANY, top->name);
+	text->Wrap(name_width);
+	sizer->Add(text, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL));
+
+	return sizer;
 }
 
 void SkylanderChooser::AddSkylandersToElementSizer(wxBoxSizer* elementSizer, wxPanel* parent, std::list<Skylander*> skylanders) {
