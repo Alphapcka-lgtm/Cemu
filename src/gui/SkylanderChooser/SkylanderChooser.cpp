@@ -1204,6 +1204,7 @@ wxPanel* SkylanderChooser::AddSwapForcePage(wxNotebook* notebook) {
 		trapShadow_bot->imgUrl = symbol;
 		trapShadow_bot->fileUrl = path + "\\Trap Shadow (Bottom).sky";
 		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, trapShadow_top, trapShadow_bot));
+		sizer->AddSpacer(10);
 
 		auto* hootLoop_top = new Skylander();
 		hootLoop_top->name = "Hoot Loop (Teleport)";
@@ -1215,10 +1216,83 @@ wxPanel* SkylanderChooser::AddSwapForcePage(wxNotebook* notebook) {
 		hootLoop_bot->fileUrl = path + "\\Hoot Loop (Bottom).sky";
 
 		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, hootLoop_top, hootLoop_bot));
+		sizer->AddSpacer(10);
+		return sizer;
+	};
+
+	auto water = [swapforce_path, swapForcePanel, this] {
+		string path = swapforce_path + "\\Water";
+		string symbol = path + "\\WaterSymbolSkylanders.png";
+
+		auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		auto* icon = new wxImage(symbol);
+		icon->Rescale(rescale_width, rescale_height);
+		auto* iconBm = new wxStaticBitmap(swapForcePanel, wxID_ANY, wxBitmapBundle::FromImage(*icon));
+		sizer->Add(iconBm);
+		sizer->AddSpacer(10);
+
+		list<Skylander*> skylanders;
+
+		auto* lightCore = new Skylander();
+		lightCore->name = "LightCore Wham Shell";
+		lightCore->imgUrl = symbol;
+		lightCore->fileUrl = path + "\\LightCore Wham Shell.sky";
+		skylanders.push_back(lightCore);
+
+		auto* gillGrunt = new Skylander();
+		gillGrunt->name = "Anchors Away Gill Grunt";
+		gillGrunt->imgUrl = symbol;
+		gillGrunt->fileUrl = path + "\\Anchors Away Gill Grunt.sky";
+		skylanders.push_back(gillGrunt);
+
+		auto* blizzardChill = new Skylander();
+		blizzardChill->name = "Blizzard Chill";
+		blizzardChill->imgUrl = symbol;
+		blizzardChill->fileUrl = path + "\\Blizzard Chill.sky";
+		skylanders.push_back(blizzardChill);
+
+		auto* ripTide = new Skylander();
+		ripTide->name = "Rip Tide";
+		ripTide->imgUrl = symbol;
+		ripTide->fileUrl = path + "\\Rip Tide.sky";
+		skylanders.push_back(ripTide);
+
+		auto* punkShock = new Skylander();
+		punkShock->name = "Punk Shock";
+		punkShock->imgUrl = symbol;
+		punkShock->fileUrl = path + "\\Punk Shock.sky";
+		skylanders.push_back(punkShock);
+
+		AddSkylandersToElementSizer(sizer, swapForcePanel, skylanders);
+
+		auto* freezeBladeTop = new Skylander();
+		freezeBladeTop->name = "Freeze Blade (Speed)";
+		freezeBladeTop->imgUrl = symbol;
+		freezeBladeTop->fileUrl = path + "\\Freeze Blade (Top).sky";
+		auto* freezeBladeBot = new Skylander();
+		freezeBladeBot->name = "Freeze Blade (Speed)";
+		freezeBladeBot->imgUrl = symbol;
+		freezeBladeBot->fileUrl = "\\Freeze Blade (Bottom).sky";
+		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, freezeBladeTop, freezeBladeBot));
+		sizer->AddSpacer(10);
+
+		auto* washBucklerTop = new Skylander();
+		washBucklerTop->name = "Wasch Buckler (Climb)";
+		washBucklerTop->imgUrl = symbol;
+		washBucklerTop->fileUrl = path + "\\Wash Buckler (Top).sky";
+		auto* washBucklerBot = new Skylander();
+		washBucklerBot->name = "Wasch Buckler (Climb)";
+		washBucklerBot->imgUrl = symbol;
+		washBucklerBot->fileUrl = path + "\\Wash Buckler (Bottom).sky";
+		sizer->Add(CreateSwapForceSkylanderElement(swapForcePanel, washBucklerTop, washBucklerBot));
+		sizer->AddSpacer(10);
+
 		return sizer;
 	};
 
 	swapForceSizer->Add(magic(), wxGBPosition(0, 0));
+	swapForceSizer->Add(water(), wxGBPosition(1, 0));
 
 	swapForceSizer->SetFlexibleDirection(wxBOTH);
 
